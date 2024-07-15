@@ -22,7 +22,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,10 +40,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import android.location.Geocoder
 import android.location.Address
 import android.content.Context
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.platform.LocalContext
 import java.util.Locale
-
-
+import com.airbnb.lottie.compose.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity()  {
@@ -71,9 +72,10 @@ class MainActivity : ComponentActivity()  {
                 Box (modifier = Modifier.fillMaxSize()){
                     Weather_Page(state = viewModel.state)
                     if(viewModel.state.isLoading){
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
+//                        CircularProgressIndicator(
+//                            modifier = Modifier.align(Alignment.Center)
+//                        )
+                        LottieLoadingAnimation()
                     }
                     viewModel.state.error?.let { error ->
                         Text(
@@ -222,6 +224,23 @@ fun getCityName(context: Context, latitude: Double, longitude: Double): String? 
 
     return cityName
 }
+
+@Composable
+fun LottieLoadingAnimation() {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ){
+        LottieAnimation(
+        composition = composition,
+        iterations = LottieConstants.IterateForever,
+        modifier = Modifier.size(250.dp).fillMaxSize(),
+        alignment = Alignment.Center
+    )}
+
+}
+
 
 
 

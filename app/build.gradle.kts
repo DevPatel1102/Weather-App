@@ -87,4 +87,7 @@ dependencies {
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
 
+    //Loading Lottie Animation
+    implementation ("com.airbnb.android:lottie-compose:6.0.1")
+
 }
